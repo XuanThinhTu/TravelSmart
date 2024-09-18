@@ -14,7 +14,7 @@ class CreateHotelTable extends Migration
             $table->foreignId('city_id')->constrained('city')->onDelete('cascade');
             $table->string('hotel_address', 255);
             $table->text('details')->nullable();
-            $table->enum('active', ['Active', 'Inactive']);
+            $table->enum('status', ['Active', 'Inactive']);
             $table->timestamps();
         });
     }
