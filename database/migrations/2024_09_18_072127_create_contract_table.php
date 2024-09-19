@@ -10,8 +10,10 @@ class CreateContractTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Changed to user_id
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Reference to users
             $table->foreignId('agent_id')->constrained('agent')->onDelete('cascade'); // Ensure the agents table exists
+            $table->foreignId('hotel_service_id')->nullable()->constrained('hotel_service')->onDelete('cascade'); // Link to hotel_service
+            $table->foreignId('transport_service_id')->nullable()->constrained('transport_services')->onDelete('cascade'); // Link to transport_services
             $table->timestamp('time_signed')->useCurrent();
             $table->decimal('total_price', 10, 2);
             $table->date('payment_date');
