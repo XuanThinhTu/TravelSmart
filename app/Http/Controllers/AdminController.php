@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\product;
+use App\Models\User;
 use Exception;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -130,22 +132,19 @@ class AdminController extends Controller
 
 
 
-    public function add_product() {
-        $categories = Category::get();
-        return view('admin.add_product', ['categories' => $categories]);
-    }
+    
 
 
-    public function view_product()
+    public function view_user()
 {
-    // Load products with their categories
-    $products = Product::with('category')->orderBy('id', 'desc')->paginate(5);
+    // Load users and order by id in descending order, then paginate
+    $users = User::orderBy('id', 'desc')->paginate(5);
 
-    $totalproducts = Product::count();
+    $totalUsers = User::count();
 
-    return view('admin.products', [
-        'products' => $products,
-        'totalproducts' => $totalproducts
+    return view('admin.user', [
+        'users' => $users,
+        'totalusers' => $totalUsers
     ]);
 }
 
@@ -154,62 +153,74 @@ class AdminController extends Controller
 
     
 
-    // add if else or try and catch 
-    //because now even there is an error it won't alert the user
-    public function save(Request $request) {
-        // Validate the input
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'discount_price' => 'nullable|numeric',
-            'quantity' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+public function add_user() {
+    return view('admin.add_user'); 
+}
+
+    
+
+    // Store a newly created user
+    public function save_user(Request $request)
+{
+    // Validate the request
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'phone' => 'nullable|string|max:15',
+        'address' => 'nullable|string|max:255',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    try {
+        // Create the user
+        User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'phone' => $validatedData['phone'],
+            'address' => $validatedData['address'],
+            'password' => Hash::make($validatedData['password']), // Hash the password
         ]);
-    
-        try {
-            $data = new Product;
-    
-            $data->title = $request->title;
-            $data->description = $request->description;
-            $data->price = $request->price;
-            $data->discount_price = $request->discount_price;
-            $data->quantity = $request->quantity;
-            $data->category_id = $request->category_id;
-    
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('products'), $imageName);
-                $data->image = $imageName;
-            }
-    
-            $data->save();
-            toastr()->addSuccess('Product Added Successfully');
-            return redirect('view_product');
-        } catch (\Exception $e) {
-            toastr()->addError('Failed to add product: ' . $e->getMessage());
-        }
-    
-        return redirect('add_product');
+
+        toastr()->closeButton()->addSuccess('User Added Successfully'); // Success notification
+
+        return redirect()->route('view_user')->with('msg', 'User added successfully.');
+
+    } catch (\Exception $e) {
+        // Display the error message directly to the user
+        return redirect()->back()->withInput()->withErrors(['msg' => 'Failed to add user: ' . $e->getMessage()]);
     }
+}
+
     
 
 
-    public function delete_product($id) {
 
-        $data = product::find($id);
+    // public function delete_product($id) {
 
-        $image_path = public_path('products/' . $data->image);
+    //     $data = product::find($id);
 
-        if (file_exists($image_path)) {
+    //     $image_path = public_path('products/' . $data->image);
 
-            unlink($image_path);
-        }
+    //     if (file_exists($image_path)) {
+
+    //         unlink($image_path);
+    //     }
+
+    //     $data->delete();
+
+    //     toastr()->closeButton()->addSuccess('Product Deleted Successfully'); //https://php-flasher.io/library/toastr/
+
+
+    //     return redirect()->back();
+    // }
+
+    public function delete_user($id) {
+
+        $data = User::find($id);
 
         $data->delete();
 
-        toastr()->closeButton()->addSuccess('Product Deleted Successfully'); //https://php-flasher.io/library/toastr/
+        toastr()->closeButton()->addSuccess('User Deleted Successfully'); //https://php-flasher.io/library/toastr/
 
 
         return redirect()->back();
@@ -217,63 +228,40 @@ class AdminController extends Controller
 
 
 
-    public function editProduct($id)
+ 
+
+
+    // Show the edit user form
+    public function editUser ($id)
     {
-        // Retrieve the product by ID
-        $product = Product::findOrFail($id);
-
-        // Retrieve all categories
-        $categories = Category::all();
-
-        // Pass data to the view
-        return view('admin.edit_product', compact('product', 'categories'));
+        $user = User::findOrFail($id); // Fetch user by ID
+        return view('admin.edit_user', compact('user')); // Pass user to the view
     }
+
+    // Update the user
+    public function updateUser(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'usertype' => 'required|string',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($request->all()); // Update user with request data
+
+        toastr()->closeButton()->addSuccess('User Added Successfully'); // Success notification
+        
+        return redirect()->route('view_user')->with('msg', 'User updated successfully.');
+        }
+
+
     
 
 
-    public function updateProduct(Request $request)
-    {
-        // Validate the input
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'quantity' => 'integer',
-            'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // optional image validation
-        ]);
-
-        // Find the product by ID
-        $product = Product::findOrFail($request->id);
-
-        // Update product details
-        $product->title = $request->input('title');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->quantity = $request->input('quantity');
-        $product->category_id = $request->input('category_id');
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete the old image if it exists
-            if ($product->image) {
-                Storage::disk('public')->delete('products/' . $product->image);
-            }
-
-            // Store the new image
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('products', $imageName, 'public');
-            $product->image = $imageName;
-        }
-
-        // Save the updated product
-        $product->save();
-
-        // Redirect with success message
-        return redirect()->route('view_product', ['id' => $product->id])
-                         ->with('msg', 'Product updated successfully!');
-    }
+  
 }
 
 

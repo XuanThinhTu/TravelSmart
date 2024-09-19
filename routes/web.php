@@ -40,20 +40,16 @@ Route::get('edit_category/{id}', [AdminController::class, 'editCategory'])->name
 
 Route::post('category/update', [AdminController::class, 'update'])-> middleware(['auth', 'admin']);
 
-//route for product
+//route for User
 route::get('productSearchByKeyword', [AdminController::class, 'productSearchByKeyword'])->middleware(['auth', 'admin']);
 
-Route::get('add_product', [AdminController::class, 'add_product'])->middleware(['auth', 'admin']);
-Route::get('view_product', [AdminController::class, 'view_product'])->name('view_product')->middleware(['auth', 'admin']);
-Route::post('add_product/save', [AdminController::class, 'save'])->middleware(['auth', 'admin']);
-Route::get('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']);
+Route::get('/add_user', [AdminController::class, 'add_user'])->middleware(['auth', 'admin']);
+Route::get('/view_user', [AdminController::class, 'view_user'])->name('view_user')->middleware(['auth', 'admin']);
+Route::post('/add_user/save', [AdminController::class, 'save_user'])->middleware(['auth', 'admin']);
+Route::get('delete_user/{id}', [AdminController::class, 'delete_user'])->middleware(['auth', 'admin']);
 
-// Route to display the edit form
-Route::get('edit_product/{id}', [AdminController::class, 'editProduct'])->name('edit_product')->middleware(['auth', 'admin']);
-
-// Route to handle the form submission
-Route::post('product/update', [AdminController::class, 'updateProduct'])->middleware(['auth', 'admin']);
-
+Route::get('edit_user/{id}', [AdminController::class, 'editUser'])->name('edit_user');
+Route::post('update_user/{id}', [AdminController::class, 'updateUser'])->name('update_user');
 
 
 //Route for product_details
