@@ -8,10 +8,10 @@ class CreateContractTable extends Migration
 {
     public function up()
     {
-        Schema::create('contract', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customer')->onDelete('cascade');
-            $table->foreignId('agent_id')->constrained('agent')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Changed to user_id
+            $table->foreignId('agent_id')->constrained('agent')->onDelete('cascade'); // Ensure the agents table exists
             $table->timestamp('time_signed')->useCurrent();
             $table->decimal('total_price', 10, 2);
             $table->date('payment_date');
@@ -23,6 +23,6 @@ class CreateContractTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('contract');
+        Schema::dropIfExists('contracts'); // Match the table name here
     }
 }
