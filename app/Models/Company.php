@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CompanyType extends Model
+class Company extends Model
 {
     protected $table = 'company_type';
     protected $primaryKey = 'id';
