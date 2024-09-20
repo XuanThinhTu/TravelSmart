@@ -31,7 +31,7 @@
                         <div class="card o-hidden card-hover">
                             <div class="card-header border-0 pb-1">
                                 <div class="card-header-title p-0">
-                                    <h4>Users</h4>
+                                    <h4>countrys</h4>
                                 </div>
                             </div>
                             <div class="card-body p-0">
@@ -45,19 +45,19 @@
                                 <div class="container mt-4">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4>Search Users</h4>
-                                            <form method="GET" action="{{ url('/view_user/SearchByKeyword') }}">
-                                                <input type="text" name="keyword" placeholder="Search by user name" value="{{ request('keyword') }}" class="form-control">
+                                            <h4>Search countrys</h4>
+                                            <form method="GET" action="{{ url('/view_country/SearchByKeyword') }}">
+                                                <input type="text" name="keyword" placeholder="Search by country name" value="{{ request('keyword') }}" class="form-control">
                                                 <button type="submit" class="btn btn-primary mt-2">Search</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Display Users -->
+                                <!-- Display countrys -->
                                 <div class="container mt-4">
                                     <div class="col-md-12" style="background-color: white;">
-                                        <p style="color: black; margin-bottom: 0">Total Users: {{ $totalusers }}</p>
+                                        <p style="color: black; margin-bottom: 0">Total Countries: {{ $totalcountries }}</p>
                                     </div>
                                 </div>
 
@@ -65,28 +65,20 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Address</th>
-                                                <th>Detail</th>
-                                                <th>Usertype</th>
+                                                <th>country_code</th>
+                                                <th>country_name</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($users as $user)
+                                            @foreach($countrys as $country)
                                             <tr>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ $user->address }}</td>
-                                                <td>{{ Str::limit($user->detail, 50) }}</td>
-                                                <td>{{ $user->usertype }}</td>
+                                                <td>{{ $country->country_code }}</td>
+                                                <td>{{ $country->country_name	 }}</td>
                                                 <td>
                                                     <!-- Action Buttons -->
-                                                    <a href="{{ url('edit_user', $user->id) }}" class="btn btn-edit">Edit</a>
-                                                    <a href="{{ url('delete_user', $user->id) }}" class="btn btn-delete" onclick="return confirmation(event)">Delete</a>
+                                                    <a href="{{ url('edit_country', $country->id) }}" class="btn btn-edit">Edit</a>
+                                                    <a href="{{ url('delete_country', $country->id) }}" class="btn btn-delete" onclick="return confirmation(event)">Delete</a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -119,7 +111,7 @@
                                 </style>
 
                                 <div class="mt-4">
-                                    {{ $users->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
+                                    {{ $countrys->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
                                 </div>
 
                             </div>
@@ -141,7 +133,7 @@
 
                             swal({
                                 title: "Delete Confirmation",
-                                text: "Are you sure you want to delete this user?",
+                                text: "Are you sure you want to delete this country?",
                                 icon: "warning",
                                 buttons: true,
                                 dangerMode: true,
@@ -152,7 +144,7 @@
                             });
                         }
                     </script>
-
+<!--  -->
                 </div>
                 <!-- Page Body End -->
             </div>

@@ -41,7 +41,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('/view_user') }}">All Users</a>
+                                <a href="{{ url('admin/view_user') }}">All Users</a>
                             </li>
                             <li>
                                 <a href="{{ url('/add_user') }}">Add New User</a>
@@ -49,18 +49,50 @@
                         </ul>
                     </li>
 
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-user-3-line"></i>
+                            <span>Country</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('admin/view_country') }}">All Countries</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/add_country') }}">Add New Country</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-user-3-line"></i>
+                            <span>City</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('admin/view_city') }}">All Cities</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/add_city') }}">Add New City</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
 
                     <li class="sidebar-list">
                         <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
                             <i class="ri-store-3-line"></i>
-                            <span>Product</span>
+                            <span>Hotel</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('admin/customer') }}">Products</a>
+                                <a href="{{ url('admin/view_hotel') }}">All Hotels</a>
                             </li>
                             <li>
-                                <a href="{{ url('add-new-product.html') }}">Add New Products</a>
+                                <a href="{{ url('/add_hotel') }}">Add New Hotel</a>
                             </li>
                         </ul>
                     </li>
@@ -68,14 +100,14 @@
                     <li class="sidebar-list">
                         <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
                             <i class="ri-list-check-2"></i>
-                            <span>Category</span>
+                            <span>Contract</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('category.html') }}">Category List</a>
+                                <a href="{{ url('/view_contract') }}">All Contracts</a>
                             </li>
                             <li>
-                                <a href="{{ url('add-new-category.html') }}">Add New Category</a>
+                                <a href="{{ url('add_contract') }}">Add New Contract</a>
                             </li>
                         </ul>
                     </li>
