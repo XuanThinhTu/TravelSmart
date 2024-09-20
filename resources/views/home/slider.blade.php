@@ -4,26 +4,26 @@
         <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
             <section id="filter-section" style="position: relative; padding: 40px 0; background-color: rgba(255, 255, 255, 0.9);">
-                <form class="filter-form" style="max-width: 800px; margin: auto;">
+                <form class="filter-form" style="max-width: 800px; margin: auto;" method="GET" action="{{ route('search.product') }}">
                     <h2 class="text-center mb-4">Find Your Perfect Stay</h2>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="destination" class="form-label">Destination</label>
-                            <input type="text" id="destination" class="form-control" placeholder="Enter destination">
+                            <input type="text" id="destination" name="destination" class="form-control" placeholder="Enter destination">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="check-in" class="form-label">Check-in</label>
-                            <input type="date" id="check-in" class="form-control">
+                            <input type="date" id="check-in" name="check_in" class="form-control">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="check-out" class="form-label">Check-out</label>
-                            <input type="date" id="check-out" class="form-control">
+                            <input type="date" id="check-out" name="check_out" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="guests" class="form-label">Guests</label>
-                            <select id="guests" class="form-control">
+                            <select id="guests" name="guests" class="form-control">
                                 <option value="">Number of guests</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="room-type" class="form-label">Room Type</label>
-                            <select id="room-type" class="form-control">
+                            <select id="room-type" name="room_type" class="form-control">
                                 <option value="">Room Type</option>
                                 <option value="single">Single</option>
                                 <option value="double">Double</option>
@@ -42,8 +42,8 @@
                         <div class="col-md-4 mb-3">
                             <label for="price-range" class="form-label">Price Range</label>
                             <div class="price-range-slider" style="margin-top: 5px;">
-                                <input type="range" min="0" max="500" value="250" id="price-min" class="form-range" style="width: 100%;">
-                                <input type="range" min="0" max="500" value="400" id="price-max" class="form-range" style="width: 100%;">
+                                <input type="range" min="0" max="500" value="250" id="price-min" name="price_min" class="form-range" style="width: 100%;">
+                                <input type="range" min="0" max="500" value="400" id="price-max" name="price_max" class="form-range" style="width: 100%;">
                                 <div class="d-flex justify-content-between">
                                     <span>Min: $<span id="min-value">250</span></span>
                                     <span>Max: $<span id="max-value">400</span></span>

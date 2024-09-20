@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TransportService extends Model
+class TransportServices extends Model
 {
     protected $table = 'transport_services';
     protected $primaryKey = 'id';
@@ -20,7 +20,7 @@ class TransportService extends Model
 
     public function ticketType()
     {
-        return $this->belongsTo(TicketType::class);
+        return $this->belongsTo(Ticket::class);
     }
 
     public function fromCity()
