@@ -46,7 +46,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4>Search Users</h4>
-                                            <form method="GET" action="{{ url('/view_user/SearchByKeyword') }}">
+                                            <form method="GET" action="{{ url('userSearchByKeyword') }}">
                                                 <input type="text" name="keyword" placeholder="Search by user name" value="{{ request('keyword') }}" class="form-control">
                                                 <button type="submit" class="btn btn-primary mt-2">Search</button>
                                             </form>
