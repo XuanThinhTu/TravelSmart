@@ -1,4 +1,4 @@
-<div class="ftco-section img" style="background-image: url(images/land.jpg);">
+ <div class="ftco-section img" style="background-image: url(images/land.jpg);">
      <div class="overlay"></div>
      <div class="container">
          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
