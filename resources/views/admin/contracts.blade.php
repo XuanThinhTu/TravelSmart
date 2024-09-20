@@ -30,7 +30,7 @@
                         <div class="card o-hidden card-hover">
                             <div class="card-header border-0 pb-1">
                                 <div class="card-header-title p-0">
-                                    <h4>Hotels</h4>
+                                    <h4>Contracts</h4>
                                 </div>
                             </div>
                             <div class="card-body p-0">
@@ -44,19 +44,19 @@
                                 <div class="container mt-4">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4>Search Hotels</h4>
-                                            <form method="GET" action="{{ url('/view_hotel/SearchByKeyword') }}">
-                                                <input type="text" name="keyword" placeholder="Search by hotel name" value="{{ request('keyword') }}" class="form-control">
+                                            <h4>Search Contracts</h4>
+                                            <form method="GET" action="{{ url('/contracts/search') }}">
+                                                <input type="text" name="keyword" placeholder="Search by user name, agent, or service" value="{{ request('keyword') }}" class="form-control">
                                                 <button type="submit" class="btn btn-primary mt-2">Search</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Display Hotels -->
+                                <!-- Display Contracts -->
                                 <div class="container mt-4">
                                     <div class="col-md-12" style="background-color: white;">
-                                        <p style="color: black; margin-bottom: 0">Total Hotels: {{ $totalHotels }}</p>
+                                        <p style="color: black; margin-bottom: 0">Total Contracts: {{ $totalContracts }}</p>
                                     </div>
                                 </div>
 
@@ -64,26 +64,30 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Hotel Name</th>
-                                                <th>City</th>
-                                                <th>Address</th>
-                                                <th>Detail</th>
-                                                <th>Status</th>
+                                                <th>User</th>
+                                                <th>Agent</th>
+                                                <th>Hotel Service</th>
+                                                <th>Transport Service</th>
+                                                <th>Total Price</th>
+                                                <th>Payment Date</th>
+                                                <th>Paid Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($hotels as $hotel)
+                                            @foreach($contracts as $contract)
                                             <tr>
-                                                <td>{{ $hotel->hotel_name }}</td>
-                                                <td>{{ $hotel->city->city_name }}</td>
-                                                <td>{{ $hotel->hotel_address }}</td>
-                                                <td>{{ Str::limit($hotel->details, 50) }}</td>
-                                                <td>{{ $hotel->active }}</td>
+                                                <td>{{ $contract->user->name }}</td>
+                                                <td>{{ $contract->agent->id }}</td>
+                                                <td>{{ $contract->hotelService->id ?? 'N/A' }}</td>
+                                                <td>{{ $contract->transportService->id ?? 'N/A' }}</td>
+                                                <td>${{ $contract->total_price }}</td>
+                                                <td>{{ $contract->payment_date }}</td>
+                                                <td>{{ $contract->paid_status }}</td>
                                                 <td>
                                                     <!-- Action Buttons -->
-                                                    <a href="{{ url('edit_hotel', $hotel->id) }}" class="btn btn-edit">Edit</a>
-                                                    <a href="{{ url('delete_hotel', $hotel->id) }}" class="btn btn-delete" onclick="return confirmation(event)">Delete</a>
+                                                    <a href="{{ url('contracts/edit', $contract->id) }}" class="btn btn-edit">Edit</a>
+                                                    <a href="{{ url('contracts/delete', $contract->id) }}" class="btn btn-delete" onclick="return confirmation(event)">Delete</a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -110,7 +114,7 @@
                                 </style>
 
                                 <div class="mt-4">
-                                    {{ $hotels->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
+                                    {{ $contracts->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
                                 </div>
 
                             </div>
@@ -132,7 +136,7 @@
 
                             swal({
                                 title: "Delete Confirmation",
-                                text: "Are you sure you want to delete this room type?",
+                                text: "Are you sure you want to delete this contract?",
                                 icon: "warning",
                                 buttons: true,
                                 dangerMode: true,

@@ -22,15 +22,18 @@
             @include('admin.sidebar')
             <!-- Page Sidebar Ends -->
 
+
             <div class="page-body" style="margin-left: 260px; padding: 20px;">
                 <div class="container-fluid">
-
                     <!-- Index Body Start -->
                     <div class="col-12">
                         <div class="card o-hidden card-hover">
                             <div class="card-header border-0 pb-1">
                                 <div class="card-header-title p-0">
-                                    <h4>Hotels</h4>
+                                    <h4>Hotel Services</h4>
+                                </div>
+                                <div class="card-header-right">
+                                    <a href="{{ route('add_hotel_service') }}" class="btn btn-primary">Add New Service</a>
                                 </div>
                             </div>
                             <div class="card-body p-0">
@@ -44,46 +47,37 @@
                                 <div class="container mt-4">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4>Search Hotels</h4>
-                                            <form method="GET" action="{{ url('/view_hotel/SearchByKeyword') }}">
-                                                <input type="text" name="keyword" placeholder="Search by hotel name" value="{{ request('keyword') }}" class="form-control">
+                                            <h4>Search Hotel Services</h4>
+                                            <form method="GET" action="{{ url('/view_hotel_service/SearchByKeyword') }}">
+                                                <input type="text" name="keyword" placeholder="Search by service name" value="{{ request('keyword') }}" class="form-control">
                                                 <button type="submit" class="btn btn-primary mt-2">Search</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Display Hotels -->
-                                <div class="container mt-4">
-                                    <div class="col-md-12" style="background-color: white;">
-                                        <p style="color: black; margin-bottom: 0">Total Hotels: {{ $totalHotels }}</p>
-                                    </div>
-                                </div>
-
+                                <!-- Display Hotel Services -->
                                 <div class="container mt-4">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Hotel Name</th>
-                                                <th>City</th>
-                                                <th>Address</th>
-                                                <th>Detail</th>
+                                                <th>Hotel</th>
+                                                <th>Room Type</th>
+                                                <th>Service Price</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($hotels as $hotel)
+                                            @foreach($hotelServices as $service)
                                             <tr>
-                                                <td>{{ $hotel->hotel_name }}</td>
-                                                <td>{{ $hotel->city->city_name }}</td>
-                                                <td>{{ $hotel->hotel_address }}</td>
-                                                <td>{{ Str::limit($hotel->details, 50) }}</td>
-                                                <td>{{ $hotel->active }}</td>
+                                                <td>{{ $service->hotel->hotel_name }}</td>
+                                                <td>{{ $service->roomType->type_name }}</td>
+                                                <td>${{ number_format($service->service_price, 2) }}</td>
+                                                <td>{{ $service->active }}</td>
                                                 <td>
-                                                    <!-- Action Buttons -->
-                                                    <a href="{{ url('edit_hotel', $hotel->id) }}" class="btn btn-edit">Edit</a>
-                                                    <a href="{{ url('delete_hotel', $hotel->id) }}" class="btn btn-delete" onclick="return confirmation(event)">Delete</a>
+                                                    <a href="{{ route('edit_hotel_service', $service->id) }}" class="btn btn-edit">Edit</a>
+                                                    <a href="{{ route('delete_hotel_service', $service->id) }}" class="btn btn-delete" onclick="return confirmation(event)">Delete</a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -92,62 +86,15 @@
                                 </div>
 
                                 <!-- Pagination -->
-                                <style>
-                                    .pagination {
-                                        justify-content: center;
-                                        margin-top: 20px;
-                                    }
-
-                                    .pagination .page-link {
-                                        color: #007bff;
-                                    }
-
-                                    .pagination .page-item.active .page-link {
-                                        background-color: #007bff;
-                                        border-color: #007bff;
-                                        color: white;
-                                    }
-                                </style>
-
                                 <div class="mt-4">
-                                    {{ $hotels->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
+                                    {{ $hotelServices->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <!-- Index Body End -->
-
-                    <!-- JavaScript Files -->
-                    <script src="{{ asset('Admin_template/vendor/jquery/jquery.min.js') }}"></script>
-                    <script src="{{ asset('Admin_template/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-                    <script src="{{ asset('Admin_template/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-                    <script src="{{ asset('Admin_template/js/front.js') }}"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-                    <script type="text/javascript">
-                        function confirmation(ev) {
-                            ev.preventDefault();
-
-                            var urlToRedirect = ev.currentTarget.getAttribute('href');
-
-                            swal({
-                                title: "Delete Confirmation",
-                                text: "Are you sure you want to delete this room type?",
-                                icon: "warning",
-                                buttons: true,
-                                dangerMode: true,
-                            }).then((willDelete) => {
-                                if (willDelete) {
-                                    window.location.href = urlToRedirect;
-                                }
-                            });
-                        }
-                    </script>
-
-                </div>
-                <!-- Page Body End -->
-            </div>
             <!-- Page-wrapper End -->
+
 
             <!-- Modal Start -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -170,26 +117,50 @@
 
             <!-- latest js -->
             <script src="{{ asset('Admin_template/js/jquery-3.6.0.min.js') }}"></script>
+
+            <!-- Bootstrap js -->
             <script src="{{ asset('Admin_template/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+
+            <!-- feather icon js -->
             <script src="{{ asset('Admin_template/js/icons/feather-icon/feather.min.js') }}"></script>
             <script src="{{ asset('Admin_template/js/icons/feather-icon/feather-icon.js') }}"></script>
+
+            <!-- scrollbar simplebar js -->
             <script src="{{ asset('Admin_template/js/scrollbar/simplebar.js') }}"></script>
             <script src="{{ asset('Admin_template/js/scrollbar/custom.js') }}"></script>
+
+            <!-- Sidebar jquery -->
             <script src="{{ asset('Admin_template/js/config.js') }}"></script>
+
+            <!-- tooltip init js -->
             <script src="{{ asset('Admin_template/js/tooltip-init.js') }}"></script>
+
+            <!-- Plugins JS -->
             <script src="{{ asset('Admin_template/js/sidebar-menu.js') }}"></script>
             <script src="{{ asset('Admin_template/js/notify/bootstrap-notify.min.js') }}"></script>
             <script src="{{ asset('Admin_template/js/notify/index.js') }}"></script>
+
+            <!-- Apexchart js -->
             <script src="{{ asset('Admin_template/js/chart/apex-chart/apex-chart1.js') }}"></script>
             <script src="{{ asset('Admin_template/js/chart/apex-chart/moment.min.js') }}"></script>
             <script src="{{ asset('Admin_template/js/chart/apex-chart/apex-chart.js') }}"></script>
             <script src="{{ asset('Admin_template/js/chart/apex-chart/stock-prices.js') }}"></script>
             <script src="{{ asset('Admin_template/js/chart/apex-chart/chart-custom1.js') }}"></script>
+
+            <!-- slick slider js -->
             <script src="{{ asset('Admin_template/js/slick.min.js') }}"></script>
             <script src="{{ asset('Admin_template/js/custom-slick.js') }}"></script>
+
+            <!-- customizer js -->
             <script src="{{ asset('Admin_template/js/customizer.js') }}"></script>
+
+            <!-- ratio js -->
             <script src="{{ asset('Admin_template/js/ratio.js') }}"></script>
+
+            <!-- sidebar effect -->
             <script src="{{ asset('Admin_template/js/sidebareffect.js') }}"></script>
+
+            <!-- Theme js -->
             <script src="{{ asset('Admin_template/js/script.js') }}"></script>
 </body>
 

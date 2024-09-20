@@ -15,7 +15,9 @@ class Hotel extends Model
         'city_id',
         'hotel_address',
         'details',
-        'status',
+        'active',         // Updated from 'status' to 'active'
+        'available_from', // Added
+        'available_to',   // Added
     ];
 
     public function city()

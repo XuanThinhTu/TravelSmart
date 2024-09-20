@@ -15,6 +15,8 @@ class CreateHotelTable extends Migration
             $table->string('hotel_address', 255);
             $table->text('details')->nullable();
             $table->enum('active', ['Active', 'Inactive']);
+            $table->date('available_from'); // Not nullable
+            $table->date('available_to');   // Not nullable
             $table->timestamps();
         });
     }

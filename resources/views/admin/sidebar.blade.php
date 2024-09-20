@@ -28,7 +28,7 @@
                     <li class="back-btn"></li>
 
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title link-nav" href="{{ url('/') }}">
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ url('admin/dashboard') }}">
                             <i class="ri-home-line"></i>
                             <span>Dashboard</span>
                         </a>
@@ -51,7 +51,7 @@
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <i class="ri-user-3-line"></i>
+                            <i class="ri-focus-3-line"></i>
                             <span>Country</span>
                         </a>
                         <ul class="sidebar-submenu">
@@ -65,9 +65,10 @@
                     </li>
 
 
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <i class="ri-user-3-line"></i>
+                            <i class="ri-focus-3-line"></i>
                             <span>City</span>
                         </a>
                         <ul class="sidebar-submenu">
@@ -76,6 +77,37 @@
                             </li>
                             <li>
                                 <a href="{{ url('/add_city') }}">Add New City</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-store-3-line"></i>
+                            <span>Room Type</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('admin/view_roomtype') }}">All Room Types</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/add_roomtype') }}">Add New Room Type</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-store-3-line"></i>
+                            <span>Hotel Service</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('/admin/hotel-services') }}">All Hotel Services</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/admin/hotel-service/add') }}">Add New Hotel Service</a>
                             </li>
                         </ul>
                     </li>
@@ -89,10 +121,59 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('admin/view_hotel') }}">All Hotels</a>
+                                <a href="{{ url('/view_hotel') }}">All Hotels</a>
                             </li>
                             <li>
                                 <a href="{{ url('/add_hotel') }}">Add New Hotel</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="sidebar-list">
+                        <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-price-tag-3-line"></i>
+                            <span>Ticket Type</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('admin/ticket-type') }}">All Ticket Type</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('admin/add-ticket-type') }}">Create Ticket Type</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="sidebar-list">
+                        <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-price-tag-3-line"></i>
+                            <span>Transport Service</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('admin/transport_services') }}">All Transport Service</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/transport_services/add') }}">Add Transport Service</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                    <li class="sidebar-list">
+                        <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                            <i class="ri-list-check-2"></i>
+                            <span>Agents</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ url('/admin/agents') }}">All Agents</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/agents/add') }}">Add New Agent</a>
                             </li>
                         </ul>
                     </li>
@@ -104,15 +185,15 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="{{ url('/view_contract') }}">All Contracts</a>
+                                <a href="{{ url('/admin/contracts') }}">All Contracts</a>
                             </li>
                             <li>
-                                <a href="{{ url('add_contract') }}">Add New Contract</a>
+                                <a href="{{ url('/contracts/add') }}">Add New Contract</a>
                             </li>
                         </ul>
                     </li>
 
-                    <li class="sidebar-list">
+                    <!-- <li class="sidebar-list">
                         <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
                             <i class="ri-list-settings-line"></i>
                             <span>Attributes</span>
@@ -246,7 +327,7 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
 
             <div class="right-arrow" id="right-arrow">
                 <i data-feather="arrow-right"></i>
