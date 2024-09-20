@@ -12,9 +12,9 @@ Route::get('/', [HomeController::class, 'home']);
 // Route::group(['prefix' => 'home'], function() {
 //     Route::get('/', [HomeController::class, 'home']);
 //     Route::get('/index', [HomeController::class, 'home']);
-// });    
+// });
 
-Route::get('/dashboard',[HomeController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,45 +24,56 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Admin routes
+Route::get('admin/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'admin']);
 
-//admin route
-route::get('admin/dashboard', [HomeController::class, 'index'])-> middleware(['auth', 'admin']);
+// Category routes
+Route::get('view_category', [AdminController::class, 'view_category'])->middleware(['auth', 'admin']);
+Route::get('searchByKeyword', [AdminController::class, 'searchByKeyword'])->middleware(['auth', 'admin']);
+Route::post('add_category', [AdminController::class, 'add_category'])->middleware(['auth', 'admin']);
+Route::get('delete_category/{id}', [AdminController::class, 'delete_category'])->middleware(['auth', 'admin']);
+Route::get('edit_category/{id}', [AdminController::class, 'editCategory'])->name('edit.category')->middleware(['auth', 'admin']);
+Route::post('category/update', [AdminController::class, 'update'])->middleware(['auth', 'admin']);
 
-//route for category
-route::get('view_category', [AdminController::class, 'view_category'])-> middleware(['auth', 'admin']);
+// Khoa's product routes
+Route::get('searchByAttribute', [FunctionController::class, 'search'])->name('search.product');
+Route::get('productSearchByKeyword', [AdminController::class, 'productSearchByKeyword'])->middleware(['auth', 'admin']);
 
-route::get('searchByKeyword', [AdminController::class, 'searchByKeyword'])->middleware(['auth', 'admin']);
+// User routes
+Route::get('/view_user/SearchByKeyword', [AdminController::class, 'userSearchByKeyword'])->middleware(['auth', 'admin']);
+Route::get('/add_user', [AdminController::class, 'add_user'])->middleware(['auth', 'admin']);
+Route::get('admin/view_user', [AdminController::class, 'view_user'])->name('view_user')->middleware(['auth', 'admin']);
+Route::post('/add_user/save', [AdminController::class, 'save_user'])->middleware(['auth', 'admin']);
+Route::get('delete_user/{id}', [AdminController::class, 'delete_user'])->middleware(['auth', 'admin']);
+Route::get('edit_user/{id}', [AdminController::class, 'editUser'])->name('edit_user');
+Route::post('update_user/{id}', [AdminController::class, 'updateUser'])->name('update_user');
 
-route::post('add_category', [AdminController::class, 'add_category'])-> middleware(['auth', 'admin']);
+// Country routes
+Route::get('/view_country/SearchByKeyword', [AdminController::class, 'countrySearchByKeyword'])->middleware(['auth', 'admin']);
+Route::get('/add_country', [AdminController::class, 'add_country'])->middleware(['auth', 'admin']);
+Route::get('admin/view_country', [AdminController::class, 'view_country'])->name('view_country')->middleware(['auth', 'admin']);
+Route::post('/add_country/save', [AdminController::class, 'save_country'])->middleware(['auth', 'admin']);
+Route::get('delete_country/{id}', [AdminController::class, 'delete_country'])->middleware(['auth', 'admin']);
+Route::get('edit_country/{id}', [AdminController::class, 'edit_country'])->name('edit_country');
+Route::post('update_country/{id}', [AdminController::class, 'update_country'])->name('update_country');
 
-route::get('delete_category/{id}', [AdminController::class, 'delete_category'])-> middleware(['auth', 'admin']);
+// City routes
+Route::get('/view_city/SearchByKeyword', [AdminController::class, 'citySearchByKeyword'])->middleware(['auth', 'admin']);
+Route::get('/add_city', [AdminController::class, 'add_city'])->middleware(['auth', 'admin']);
+Route::get('admin/view_city', [AdminController::class, 'view_city'])->name('view_city')->middleware(['auth', 'admin']);
+Route::post('/add_city/save', [AdminController::class, 'save_city'])->middleware(['auth', 'admin']);
+Route::get('delete_city/{id}', [AdminController::class, 'delete_city'])->middleware(['auth', 'admin']);
+Route::get('edit_city/{id}', [AdminController::class, 'edit_city'])->name('edit_city')->middleware(['auth', 'admin']);
+Route::post('update_city/{id}', [AdminController::class, 'update_city'])->name('update_city');
 
-Route::get('edit_category/{id}', [AdminController::class, 'editCategory'])->name('edit.category')-> middleware(['auth', 'admin']);
+// Hotel routes
+Route::get('/view_hotel/SearchByKeyword', [AdminController::class, 'hotelSearchByKeyword'])->middleware(['auth', 'admin']);
+Route::get('/add_hotel', [AdminController::class, 'add_hotel'])->middleware(['auth', 'admin']);
+Route::get('admin/view_hotel', [AdminController::class, 'view_hotel'])->name('view_hotel')->middleware(['auth', 'admin']);
+Route::post('/add_hotel/save', [AdminController::class, 'save_hotel'])->middleware(['auth', 'admin']);
+Route::get('delete_hotel/{id}', [AdminController::class, 'delete_hotel'])->middleware(['auth', 'admin']);
+Route::get('edit_hotel/{id}', [AdminController::class, 'editHotel'])->name('edit_hotel');
+Route::post('update_hotel/{id}', [AdminController::class, 'updateHotel'])->name('update_hotel');
 
-Route::post('category/update', [AdminController::class, 'update'])-> middleware(['auth', 'admin']);
-
-//route for product
-route::get('searchByAttribute', [FunctionController::class, 'search'])->name(name: 'search.product');
-
-route::get('productSearchByKeyword', [AdminController::class, 'productSearchByKeyword'])->middleware(['auth', 'admin']);
-
-Route::get('add_product', [AdminController::class, 'add_product'])->middleware(['auth', 'admin']);
-Route::get('view_product', [AdminController::class, 'view_product'])->name('view_product')->middleware(['auth', 'admin']);
-Route::post('add_product/save', [AdminController::class, 'save'])->middleware(['auth', 'admin']);
-Route::get('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']);
-
-// Route to display the edit form
-Route::get('edit_product/{id}', [AdminController::class, 'editProduct'])->name('edit_product')->middleware(['auth', 'admin']);
-
-// Route to handle the form submission
-Route::post('product/update', [AdminController::class, 'updateProduct'])->middleware(['auth', 'admin']);
-
-
-
-//Route for product_details
+// Product details route
 Route::get('product_details/{id}', [HomeController::class, 'product_details']);
-
-
-
-
-
